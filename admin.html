@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Nuella Boutique - Admin</title>
+<style>
+:root{--g:#1a8a1a;--r:#d0021b;--pk:#e6007e;--bd:#ececec}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f7f7f7;color:rgba(0,0,0,.78)}
+button{font-family:inherit;cursor:pointer}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.lb{background:#fff;border-radius:14px;padding:30px 24px;width:100%;max-width:360px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+.lb img{height:70px;margin-bottom:8px}
+.lb input{width:100%;padding:13px;border:1.5px solid #e2e2e2;border-radius:8px;font-size:16px;text-align:center;margin:12px 0}
+#err{color:var(--r);font-size:13px;margin-top:10px;display:none}
+.bk{padding:12px 16px;background:#000;color:#fff;border:0;border-radius:8px;font-size:14px;font-weight:700;margin:10px 8px 0 0}
+.bk.g{background:var(--g)}.bk.o{background:#fff;color:#000;border:1.5px solid #e2e2e2}.bk.r{background:#fff;color:var(--r);border:1.5px solid #e2e2e2}
+#app{display:none}
+.top{background:#000;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;font-weight:800;text-transform:uppercase;font-size:14px}
+.top button{background:none;border:1px solid #666;color:#ccc;border-radius:6px;padding:4px 10px;font-size:12px}
+nav{display:flex;overflow-x:auto;background:#fff;border-bottom:1px solid #e2e2e2;position:sticky;top:46px;z-index:99}
+nav div{padding:12px 16px;font-size:13px;font-weight:600;color:#999;white-space:nowrap;cursor:pointer;border-bottom:2px solid transparent}
+nav div.on{color:#000;border-bottom-color:#000}
+.ct{padding:16px;max-width:900px;margin:0 auto}
+.sec{display:none}.sec.on{display:block}
+.row{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
+.chip{padding:8px 14px;border-radius:20px;border:1.5px solid #e2e2e2;font-size:12.5px;font-weight:600;color:#666;white-space:nowrap;background:#fff}
+.chip.on{background:#000;color:#fff;border-color:#000}
+input,select,textarea{width:100%;padding:10px 12px;border:1.5px solid #e2e2e2;border-radius:8px;font-size:14px;font-family:inherit;margin-top:4px}
+.card{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer}
+.card .t{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-size:12px;color:#999;font-weight:600}
+.card .n{font-size:14.5px;font-weight:700;color:#000}
+.card .d{font-size:12.5px;color:#888}
+.card .p{font-size:13.5px;font-weight:700;color:#000;margin-top:4px}
+.st{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:12px;text-transform:uppercase}
+.s-Pending{background:#fff3cd;color:#856404}.s-In{background:#cce5ff;color:#004085}.s-Delivered,.s-active{background:#d4edda;color:#155724}.s-Cancelled{background:#f8d7da;color:#721c24}.s-inactive{background:#eee;color:#999}
+.empty,.spin{text-align:center;padding:36px 20px;color:#999;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
+.stat{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:14px}
+.stat small{display:block;font-size:11.5px;font-weight:700;color:#999;text-transform:uppercase;margin-bottom:6px}
+.stat b{font-size:20px;color:#000}
+.h{font-size:13px;font-weight:800;color:#000;margin:14px 0 8px}
+.li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd);font-size:13px}
+.pc{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--bd);border-radius:10px;padding:10px;margin-bottom:8px}
+.pc img{width:52px;height:52px;border-radius:8px;object-fit:cover;background:#eee;flex:0 0 auto}
+.pc .i{flex:1;min-width:0;cursor:pointer}
+.pc .i b{display:block;font-size:13.5px;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc .i small{color:#999}
+.fab{position:fixed;bottom:20px;right:20px;width:54px;height:54px;border-radius:50%;background:#000;color:#fff;border:0;font-size:26px;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:200;display:none}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:none;align-items:flex-end;justify-content:center}
+.ov.on{display:flex}
+@media(min-width:700px){.ov{align-items:center}}
+.md{background:#fff;width:100%;max-width:500px;max-height:92vh;overflow-y:auto;border-radius:16px 16px 0 0;padding:20px;position:relative}
+@media(min-width:700px){.md{border-radius:16px}}
+.x{position:absolute;top:12px;right:12px;background:#f0f0f0;border:0;border-radius:50%;width:30px;height:30px}
+.lab{font-size:11.5px;font-weight:700;color:#999;text-transform:uppercase;margin-top:14px}
+.val{font-size:14.5px;color:#000;margin-top:2px;white-space:pre-wrap}
+.vr{display:grid;grid-template-columns:repeat(3,1fr) 34px;gap:6px;margin-bottom:6px;align-items:end}
+.vr input{margin:0;padding:8px}
+.vr button{height:38px;border:0;background:#f0f0f0;border-radius:8px}
+.tm{display:flex;gap:8px;align-items:center;background:#fafafa;border:1px solid var(--bd);border-radius:10px;padding:8px;margin-bottom:6px;font-size:12.5px}
+.tm span{flex:1;min-width:0}
+.tm button{border:0;background:none;color:var(--r);font-size:16px}
+.sw{display:flex;justify-content:space-between;align-items:center;padding:10px 0;font-weight:600;color:#000}
+.tg{width:46px;height:26px;border-radius:13px;background:#ccc;border:0;position:relative;transition:.2s}
+.tg::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}
+.tg.on{background:var(--g)}.tg.on::after{left:23px}
+.small{font-size:12px;color:#999}
+</style>
+</head>
+<body>
+
+<div class="login" id="login">
+  <div class="lb">
+    <img src="/logo.png" alt="Nuella Boutique" onerror="this.style.display='none'">
+    <div style="font-weight:800;text-transform:uppercase">Admin panel</div>
+    <input type="password" id="code" placeholder="Access code" autocomplete="off" onkeydown="if(event.key==='Enter')signIn()">
+    <button class="bk" style="width:100%;margin:0" onclick="signIn()" id="lbtn">Sign in</button>
+    <div id="err">Wrong access code</div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="top"><span>Nuella Boutique</span><button onclick="signOut()">Sign out</button></div>
+  <nav id="nav">
+    <div class="on" data-s="orders">Orders</div><div data-s="products">Products</div><div data-s="clients">Clients</div><div data-s="fin">Finances</div><div data-s="set">Settings</div>
+  </nav>
+  <div class="ct">
+    <div class="sec on" id="s-orders">
+      <input id="o-q" placeholder="Search (name, phone, city, product)..." oninput="clearTimeout(qt);qt=setTimeout(function(){loadOrders()},400)">
+      <div class="row" id="o-f" style="margin-top:12px">
+        <div class="chip on" data-f="today">Today</div><div class="chip" data-f="all">All</div><div class="chip" data-f="Pending">Pending</div><div class="chip" data-f="In progress">In progress</div><div class="chip" data-f="Delivered">Delivered</div><div class="chip" data-f="Cancelled">Cancelled</div>
+      </div>
+      <div id="o-list"></div>
+    </div>
+    <div class="sec" id="s-products"><div id="p-list"></div></div>
+    <div class="sec" id="s-clients"><div id="c-list"></div></div>
+    <div class="sec" id="s-fin">
+      <div class="row" id="f-p"><div class="chip on" data-p="day">Today</div><div class="chip" data-p="week">Week</div><div class="chip" data-p="month">Month</div><div class="chip" data-p="all">All time</div></div>
+      <div id="f-c"></div>
+    </div>
+    <div class="sec" id="s-set"><div id="set-c"></div></div>
+  </div>
+</div>
+
+<button class="fab" id="fab" onclick="openProd('')">+</button>
+<div class="ov" id="ov" onclick="if(event.target===this)closeMd()"><div class="md"><button class="x" onclick="closeMd()">&#10005;</button><div id="md"></div></div></div>
+
+<script>
+var API = "https://script.google.com/macros/s/AKfycbyZSkuQSDgm5AM2dvPzqsi0IuN8peU7SJGVUWO-Z9JOeIegIC-TwFHGOtXK5UT-77V7kg/exec";
+var CODE = "", pend = {}, rid = 0, qt = null, OF = "today", FP = "day", OC = [], PC = [];
+var STAT = ["Pending", "In progress", "Delivered", "Cancelled"];
+function $(i){return document.getElementById(i)}
+function E(s){var d=document.createElement("div");d.textContent=s==null?"":s;return d.innerHTML}
+function A(s){return E(s).replace(/"/g,"&quot;")}
+function money(n,c){var s=Math.round(n||0).toString();return c==="NGN"?"₦"+s.replace(/\B(?=(\d{3})+(?!\d))/g,","):s.replace(/\B(?=(\d{3})+(?!\d))/g," ")+" FCFA"}
+function dt(ts){return ts?new Date(ts).toLocaleString([], {day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):""}
+function sc(s){return "s-" + String(s).split(" ")[0]}
+function wa(p,c){var d=String(p||"").replace(/\D/g,"");if(d.indexOf("00")===0)d=d.slice(2);if(d.indexOf("234")===0||d.indexOf("225")===0)return d;if(c==="NGN"&&d.length===11&&d[0]==="0")return"234"+d.slice(1);if(c==="XOF"&&d.length===10)return"225"+d;return d}
+function spin(id){$(id).innerHTML='<div class="spin">Loading...</div>'}
+
+// ---------- APPEL SERVEUR : formulaire POST -> iframe -> postMessage ----------
+window.addEventListener("message", function(e){
+  var d = e.data; if (!d || !d.rid || !pend[d.rid]) return;
+  var cb = pend[d.rid]; delete pend[d.rid]; cb(d.res);
+});
+function call(action, data, cb){
+  var id = "r" + (++rid), fr = document.createElement("iframe"), f = document.createElement("form");
+  fr.name = "fr" + id; fr.style.display = "none"; document.body.appendChild(fr);
+  f.method = "POST"; f.action = API; f.target = fr.name; f.style.display = "none";
+  [["adm", action], ["code", CODE], ["data", JSON.stringify(data || {})], ["rid", id]].forEach(function(p){
+    var i = document.createElement("textarea"); i.name = p[0]; i.value = p[1]; f.appendChild(i);
+  });
+  document.body.appendChild(f);
+  var tm = setTimeout(function(){ if (pend[id]) { delete pend[id]; fin({ok:false,message:"No response from the server. Check that the Apps Script is deployed as a NEW VERSION (access: Anyone), then try again."}); } }, 25000);
+  function fin(r){ clearTimeout(tm); fr.remove(); f.remove(); cb(r); }
+  pend[id] = fin;
+  f.submit();
+}
+function chk(r){
+  if (r && r.auth === false) { signOut(); return false; }
+  if (!r || !r.ok) { alert((r && r.message) || "Error"); return false; }
+  return true;
+}
+
+// ---------- LOGIN ----------
+function signIn(){
+  var c = $("code").value.trim(); if (!c) return;
+  CODE = c; $("lbtn").textContent = "..."; $("err").style.display = "none";
+  call("ping", {}, function(r){
+    $("lbtn").textContent = "Sign in";
+    if (r && r.ok) { try{sessionStorage.setItem("nu_code", c)}catch(e){} start(); }
+    else { CODE = ""; $("err").textContent = (r && r.message) || "Wrong access code"; $("err").style.display = "block"; }
+  });
+}
+function signOut(){ try{sessionStorage.removeItem("nu_code")}catch(e){} location.reload(); }
+function start(){ $("login").style.display = "none"; $("app").style.display = "block"; loadOrders(); }
+(function(){ try{ var c = sessionStorage.getItem("nu_code"); if (c) { CODE = c; start(); } }catch(e){} })();
+
+// ---------- NAVIGATION ----------
+var LOADED = {};
+$("nav").onclick = function(e){
+  var s = e.target.getAttribute("data-s"); if (!s) return;
+  document.querySelectorAll("#nav div").forEach(function(d){ d.className = d.getAttribute("data-s") === s ? "on" : "" });
+  document.querySelectorAll(".sec").forEach(function(d){ d.className = "sec" + (d.id === "s-" + s ? " on" : "") });
+  $("fab").style.display = s === "products" ? "block" : "none";
+  if (s === "orders") loadOrders();
+  if (!LOADED[s]) { LOADED[s] = 1; if (s==="products") loadProducts(); if (s==="clients") loadClients(); if (s==="fin") loadFin(); if (s==="set") loadSet(); }
+};
+function closeMd(){ $("ov").className = "ov"; }
+function openMd(h){ $("md").innerHTML = h; $("ov").className = "ov on"; }
+function chips(id, attr, cb){
+  $(id).onclick = function(e){ var v = e.target.getAttribute(attr); if (v === null) return; document.querySelectorAll("#" + id + " .chip").forEach(function(c){ c.className = "chip" + (c.getAttribute(attr) === v ? " on" : "") }); cb(v); };
+}
+chips("o-f", "data-f", function(v){ OF = v; loadOrders(); });
+chips("f-p", "data-p", function(v){ FP = v; loadFin(); });
+
+// ---------- ORDERS ----------
+function loadOrders(){
+  spin("o-list");
+  call("orders", {filter: OF, q: $("o-q").value.trim()}, function(r){
+    if (!chk(r)) return; OC = r.orders; var h = "";
+    OC.forEach(function(o,i){
+      h += '<div class="card" onclick="openOrder(' + i + ')"><div class="t"><span>#' + A(o.id) + ' · ' + dt(o.ts) + '</span><span class="st ' + sc(o.status) + '">' + A(o.status) + '</span></div><div class="n">' + E(o.name) + '</div><div class="d">' + E(o.city) + ' · ' + E(o.product) + (o.size ? " / " + E(o.size) : "") + (o.color ? " / " + E(o.color) : "") + ' x' + o.qty + '</div><div class="p">' + money(o.total, o.currency) + '</div></div>';
+    });
+    $("o-list").innerHTML = h || '<div class="empty">No orders</div>';
+  });
+}
+function openOrder(i){
+  var o = OC[i]; if (!o) return;
+  var opts = STAT.map(function(s){ return '<option' + (s === o.status ? " selected" : "") + '>' + s + '</option>' }).join("");
+  openMd('<div class="lab">Client</div><div class="val">' + E(o.name) + '</div>' +
+    '<div class="lab">Phone</div><div class="val">' + E(o.phone1) + (o.phone2 ? " / " + E(o.phone2) : "") + '</div>' +
+    '<a href="https://wa.me/' + wa(o.phone1, o.currency) + '" target="_blank"><button class="bk g" style="margin-top:6px">💬 WhatsApp</button></a>' +
+    '<div class="lab">City / Address</div><div class="val">' + E(o.city) + ' - ' + E(o.address) + '</div>' +
+    '<div class="lab">Item</div><div class="val">' + E(o.product) + (o.size ? " / " + E(o.size) : "") + (o.color ? " / " + E(o.color) : "") + ' x' + o.qty + '</div>' +
+    '<div class="lab">Total</div><div class="val">' + money(o.total, o.currency) + '</div>' +
+    (o.notes ? '<div class="lab">Notes</div><div class="val">' + E(o.notes) + '</div>' : '') +
+    '<div class="lab">Status</div><select id="o-st">' + opts + '</select>' +
+    '<div class="lab">Add a note</div><textarea id="o-nt" rows="2"></textarea>' +
+    '<button class="bk" onclick="saveOrder(\'' + A(o.id) + '\')">Save</button>');
+}
+function saveOrder(id){
+  call("orderUpdate", {id: id, status: $("o-st").value, note: $("o-nt").value.trim()}, function(r){ if (chk(r)) { closeMd(); loadOrders(); } });
+}
+
+// ---------- PRODUCTS ----------
+function loadProducts(){
+  spin("p-list");
+  call("products", {}, function(r){
+    if (!chk(r)) return; PC = r.products; var h = "";
+    PC.forEach(function(p){
+      var v = p.variants[0], pr = v ? (v.priceNGN ? money(v.priceNGN, "NGN") : "") + (v.priceNGN && v.priceXOF ? " · " : "") + (v.priceXOF ? money(v.priceXOF, "XOF") : "") : "";
+      h += '<div class="pc"><img src="' + A(p.photo) + '" onerror="this.style.opacity=0"><div class="i" onclick="openProd(\'' + p.id + '\')"><b>' + E(p.nameEN || p.nameFR) + '</b><small>' + pr + '</small></div><span class="st s-' + p.status + '" style="cursor:pointer" onclick="togProd(\'' + p.id + '\',\'' + p.status + '\')">' + p.status + '</span><button class="x" style="position:static" onclick="delProd(\'' + p.id + '\')">🗑</button></div>';
+    });
+    $("p-list").innerHTML = h || '<div class="empty">No products yet. Tap + to add one.</div>';
+  });
+}
+function togProd(id, s){ call("productToggle", {id: id, status: s === "active" ? "inactive" : "active"}, function(r){ if (chk(r)) loadProducts(); }); }
+function delProd(id){
+  var p = PC.filter(function(x){return x.id === id})[0];
+  if (!confirm('Delete "' + (p ? p.nameEN || p.nameFR : id) + '" permanently? Variants and testimonials will be deleted too.')) return;
+  call("productDelete", {id: id}, function(r){ if (chk(r)) loadProducts(); });
+}
+function vRow(v){
+  v = v || {};
+  function f(c, ph, val){ return '<input class="' + c + '" placeholder="' + ph + '" value="' + A(val || "") + '">' }
+  return '<div class="vr">' + f("v-s", "Size", v.size) + f("v-c", "Color", v.color) + f("v-pn", "Price ₦", v.priceNGN) + '<span></span>' + f("v-px", "Price FCFA", v.priceXOF) + f("v-on", "Old ₦", v.oldNGN) + f("v-ox", "Old FCFA", v.oldXOF) + '<button onclick="this.parentNode.remove()">✕</button></div>';
+}
+function addV(){ $("mp-v").insertAdjacentHTML("beforeend", vRow()); }
+function openProd(id){
+  var p = PC.filter(function(x){return x.id === id})[0] || {id:"", nameFR:"", nameEN:"", descFR:"", descEN:"", category:"", photo:"", photosRaw:"", costNGN:0, costXOF:0, status:"active", variants:[{}]};
+  function fld(l, i, v, t){ return '<div class="lab">' + l + '</div><input id="' + i + '"' + (t ? ' type="' + t + '"' : '') + ' value="' + A(v) + '">' }
+  openMd(fld("Name (English)", "mp-ne", p.nameEN) + fld("Name (French)", "mp-nf", p.nameFR) + fld("Category (e.g. Clothing, Accessories, Hair & More)", "mp-cat", p.category) +
+    '<div class="lab">Main photo</div><input id="mp-ph" value="' + A(p.photo) + '" placeholder="URL or upload"><input type="file" id="mp-phf" accept="image/*" onchange="up(this,\'mp-ph\',false)"><span class="small" id="mp-pst"></span>' +
+    '<div class="lab">Gallery (URLs separated by commas)</div><input id="mp-gal" value="' + A(p.photosRaw) + '"><input type="file" id="mp-galf" accept="image/*" onchange="up(this,\'mp-gal\',true)"><span class="small" id="mp-gst"></span>' +
+    '<div class="lab">Description (English, HTML allowed)</div><textarea id="mp-de" rows="3">' + E(p.descEN) + '</textarea>' +
+    '<div class="lab">Description (French, HTML allowed)</div><textarea id="mp-df" rows="3">' + E(p.descFR) + '</textarea>' +
+    fld("Cost price ₦ (Naira)", "mp-cn", p.costNGN, "number") + fld("Cost price FCFA", "mp-cx", p.costXOF, "number") +
+    '<div class="lab">Status</div><select id="mp-st"><option value="active"' + (p.status === "active" ? " selected" : "") + '>Active (visible)</option><option value="inactive"' + (p.status !== "active" ? " selected" : "") + '>Inactive (hidden)</option></select>' +
+    '<div class="lab">Variants - fill both prices (₦ and FCFA) or the item is hidden in that currency</div><div id="mp-v">' + p.variants.map(vRow).join("") + '</div>' +
+    '<button class="bk o" onclick="addV()">+ Variant</button>' +
+    (p.id ? '<div class="h" style="margin-top:22px">Testimonials</div><div id="tm-l"></div><div class="lab">Client name</div><input id="tm-n"><div class="lab">Text</div><textarea id="tm-t" rows="2"></textarea><div class="lab">Photo (optional)</div><input id="tm-p" placeholder="URL"><input type="file" accept="image/*" onchange="up(this,\'tm-p\',false)"><label class="small"><input type="checkbox" id="tm-a" style="width:auto"> Show on all products</label><br><button class="bk g" onclick="addTm(\'' + p.id + '\')">+ Add testimonial</button>' : '') +
+    '<div style="margin-top:16px"><button class="bk" onclick="saveProd(\'' + p.id + '\')">Save product</button></div>');
+  if (p.id) loadTm(p.id);
+}
+function saveProd(id){
+  var vs = [];
+  document.querySelectorAll("#mp-v .vr").forEach(function(r){
+    function g(c){ return r.querySelector("." + c).value.trim() }
+    if (g("v-s") || g("v-c") || g("v-pn") || g("v-px")) vs.push({size:g("v-s"), color:g("v-c"), priceNGN:g("v-pn"), priceXOF:g("v-px"), oldNGN:g("v-on"), oldXOF:g("v-ox")});
+  });
+  var d = {id:id, nameEN:$("mp-ne").value.trim(), nameFR:$("mp-nf").value.trim(), category:$("mp-cat").value.trim(), photo:$("mp-ph").value.trim(), photos:$("mp-gal").value.trim(), descEN:$("mp-de").value, descFR:$("mp-df").value, costNGN:$("mp-cn").value, costXOF:$("mp-cx").value, status:$("mp-st").value, variants:vs};
+  if (!d.nameEN && !d.nameFR) return alert("Product name is required");
+  call("productSave", d, function(r){ if (chk(r)) { closeMd(); loadProducts(); } });
+}
+function up(inp, target, append){
+  var f = inp.files[0]; if (!f) return;
+  var st = inp.nextElementSibling; if (st) st.textContent = " Uploading...";
+  var rd = new FileReader();
+  rd.onload = function(){
+    var img = new Image();
+    img.onload = function(){
+      var s = Math.min(1, 1000 / Math.max(img.width, img.height)), c = document.createElement("canvas");
+      c.width = img.width * s; c.height = img.height * s; c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      call("upload", {base64: c.toDataURL("image/jpeg", .82), name: f.name.replace(/\.\w+$/, "") + ".jpg", mime: "image/jpeg"}, function(r){
+        if (st) st.textContent = r && r.ok ? " Done" : " " + ((r && r.message) || "Error");
+        if (r && r.ok) { var t = $(target); t.value = append && t.value.trim() ? t.value.trim() + "," + r.url : r.url; }
+      });
+    };
+    img.src = rd.result;
+  };
+  rd.readAsDataURL(f);
+}
+function loadTm(pid){
+  call("tmList", {productId: pid}, function(r){
+    var el = $("tm-l"); if (!el || !r || !r.ok) return;
+    el.innerHTML = r.list.map(function(t){ return '<div class="tm"><span><b>' + E(t.clientName) + '</b>' + (t.productId === "ALL" ? " (all products)" : "") + '<br>' + E(t.text) + '</span><button onclick="delTm(\'' + t.id + '\',\'' + pid + '\')">🗑</button></div>' }).join("") || '<div class="small">No testimonials yet</div>';
+  });
+}
+function addTm(pid){
+  var d = {productId: $("tm-a").checked ? "ALL" : pid, clientName: $("tm-n").value.trim(), text: $("tm-t").value.trim(), photoURL: $("tm-p").value.trim()};
+  if (!d.clientName || !d.text) return alert("Client name and text are required");
+  call("tmSave", d, function(r){ if (chk(r)) { $("tm-n").value = $("tm-t").value = $("tm-p").value = ""; loadTm(pid); } });
+}
+function delTm(id, pid){ if (confirm("Delete this testimonial?")) call("tmDelete", {id: id}, function(r){ if (chk(r)) loadTm(pid); }); }
+
+// ---------- CLIENTS ----------
+function loadClients(){
+  spin("c-list");
+  call("clients", {}, function(r){
+    if (!chk(r)) return;
+    $("c-list").innerHTML = r.clients.map(function(c){
+      var tot = (c.totalNGN ? money(c.totalNGN, "NGN") : "") + (c.totalNGN && c.totalXOF ? " + " : "") + (c.totalXOF ? money(c.totalXOF, "XOF") : "");
+      return '<div class="card"><div class="n">' + E(c.name) + '</div><div class="d">' + E(c.phone) + ' · ' + E(c.city) + '</div><div class="d">' + c.orders + ' order(s) · ' + c.delivered + ' delivered' + (tot ? ' · ' + tot : '') + '</div></div>';
+    }).join("") || '<div class="empty">No clients yet</div>';
+  });
+}
+
+// ---------- FINANCES ----------
+function loadFin(){
+  spin("f-c");
+  call("finances", {period: FP}, function(r){
+    if (!chk(r)) return; var f = r.f;
+    var h = '<div class="grid"><div class="stat"><small>Orders</small><b>' + f.total + '</b></div><div class="stat"><small>Delivered</small><b>' + f.delivered + '</b></div><div class="stat"><small>Open</small><b>' + f.open + '</b></div><div class="stat"><small>Cancelled</small><b>' + f.cancelled + '</b></div></div>';
+    ["NGN", "XOF"].forEach(function(c){
+      var b = f[c];
+      h += '<div class="h">' + (c === "NGN" ? "Naira (₦)" : "FCFA") + '</div><div class="grid"><div class="stat"><small>Cash collected</small><b>' + money(b.revenue, c) + '</b></div><div class="stat"><small>Pending cash</small><b>' + money(b.pending, c) + '</b></div><div class="stat"><small>Product + delivery cost</small><b>' + money(b.cost + b.delivery, c) + '</b></div><div class="stat"><small>Net margin</small><b>' + money(b.margin, c) + '</b></div></div>';
+    });
+    h += '<div class="h">Top products</div>' + (f.top.map(function(t){ return '<div class="li"><span>' + E(t.name) + '</span><span>' + t.nb + ' order(s) · ' + t.del + ' delivered</span></div>' }).join("") || '<div class="empty">No data</div>');
+    $("f-c").innerHTML = h;
+  });
+}
+
+// ---------- SETTINGS ----------
+function loadSet(){
+  spin("set-c");
+  call("settingsGet", {}, function(r){
+    if (!chk(r)) return; var s = r.s;
+    $("set-c").innerHTML = '<div class="stat" style="margin-bottom:12px"><div class="lab" style="margin-top:0">Banner text (English)</div><input id="s-be" value="' + A(s.bannerEN) + '"><div class="lab">Banner text (French)</div><input id="s-bf" value="' + A(s.bannerFR) + '">' +
+      '<div class="lab">Delivery cost per order ₦</div><input id="s-dn" type="number" value="' + (s.delNGN || 0) + '"><div class="lab">Delivery cost per order FCFA</div><input id="s-dx" type="number" value="' + (s.delXOF || 0) + '">' +
+      '<div class="sw"><span>Pause the shop</span><button class="tg' + (s.suspended ? " on" : "") + '" id="s-sp" onclick="this.classList.toggle(\'on\')"></button></div><div class="small">When paused, products stay visible but ordering is disabled.</div>' +
+      '<button class="bk" onclick="saveSet()">Save</button></div>' +
+      '<div class="stat"><div class="lab" style="margin-top:0">Change access code</div><input id="s-code" type="password" placeholder="New code (4 characters min.)"><button class="bk" onclick="chCode()">Change code</button></div>';
+  });
+}
+function saveSet(){
+  call("settingsSave", {bannerEN: $("s-be").value.trim(), bannerFR: $("s-bf").value.trim(), delNGN: $("s-dn").value, delXOF: $("s-dx").value, suspended: $("s-sp").classList.contains("on")}, function(r){ if (chk(r)) alert("Saved"); });
+}
+function chCode(){
+  var c = $("s-code").value.trim(); if (!c) return;
+  call("codeChange", {code: c}, function(r){ if (chk(r)) { CODE = c; try{sessionStorage.setItem("nu_code", c)}catch(e){} $("s-code").value = ""; alert("Code changed. Use it next time you sign in."); } });
+}
+</script>
+</body>
+</html>
