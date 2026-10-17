@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nuella Boutique</title>
+<link rel="icon" href="/logo.png">
+<style>
+:root{--pk:#e6007e;--bd:#e6e6e6;--mut:#888}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:rgba(0,0,0,.82);background:#fff;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+.bar{background:var(--pk);color:#fff;text-align:center;font-size:12.5px;font-weight:700;padding:8px 12px}
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:center;padding:10px 12px}
+header img{height:40px;width:auto;display:block;cursor:pointer}
+.chips{gap:6px}
+.chip{border:1.5px solid #ddd;background:#fff;border-radius:16px;padding:5px 11px;font-size:12px;font-weight:600;color:#555}
+.chip.on{background:#000;color:#fff;border-color:#000}
+.wrap{max-width:1100px;margin:0 auto;padding:14px 12px 40px}
+.cats{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
+.cats .chip{white-space:nowrap;padding:5px 12px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:960px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{border:1px solid #e6e6e6;border-radius:10px;overflow:hidden;cursor:pointer;background:#fff}
+.card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center top;display:block;background:#fafafa}
+.card div{padding:10px 10px 14px}
+.card .n{font-size:13px;font-weight:600;color:#000;line-height:1.35;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;padding:0}
+.card .pp{font-size:15px;font-weight:700;color:#000;padding:0}
+.sk{aspect-ratio:3/4;border-radius:10px;background:linear-gradient(90deg,#f0f0f0 25%,#f8f8f8 50%,#f0f0f0 75%);background-size:200% 100%;animation:sh 1.3s infinite}
+@keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.empty{grid-column:1/-1;text-align:center;padding:40px;color:var(--mut)}
+.pv{max-width:480px;margin:0 auto;padding:0 4px 90px}
+.back{background:none;border:0;font-size:14px;font-weight:700;padding:12px 4px;color:#000}
+#g-main{width:100%;height:auto;max-height:78vh;object-fit:contain;border-radius:12px;display:block;background:#fafafa}
+.th{display:flex;gap:8px;margin-top:10px;overflow-x:auto}
+.th img{width:56px;height:56px;border-radius:8px;object-fit:cover;border:2px solid transparent;opacity:.7;flex:0 0 auto}
+.th img.on{border-color:#000;opacity:1}
+.stars{color:#f5a623;font-size:13px;font-weight:700;margin:14px 0 6px}
+.stars span{color:rgba(0,0,0,.7);font-weight:600}
+h1{font-size:19px;line-height:1.4;margin:0 0 10px;color:#000}
+.price{display:flex;align-items:baseline;gap:10px;margin-bottom:14px}
+.price b{font-size:24px;color:#000}
+.price s{color:#999;font-size:15px}
+.lb{font-size:12px;font-weight:700;color:#666;text-transform:uppercase;margin:12px 0 6px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:2px solid #ddd;background:#fff;border-radius:8px;padding:7px 12px;font-size:13px;font-weight:600}
+.opt.on{border-color:#000;background:#fafafa}
+.msg{color:#d0021b;font-size:13px;margin-top:8px}
+.btn{width:100%;padding:13px;background:#000;color:#fff;font-size:15px;font-weight:700;border:0;border-radius:8px;text-transform:uppercase;letter-spacing:.4px;margin-top:14px}
+.btn:disabled{background:#999;cursor:not-allowed}
+.trust{overflow:hidden;white-space:nowrap;margin:16px 0;padding:10px 0;border-top:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6;font-size:12.5px;font-weight:600}
+.trk{display:inline-flex;animation:mq 16s linear infinite}
+.trk span{padding:0 22px}
+.desc{font-size:14px;line-height:1.6;margin:10px 0 26px}
+.desc img{max-width:100%;border-radius:10px;display:block;margin:14px auto}
+.desc p{margin:0 0 12px}
+.sec{max-width:480px;margin:0 auto;padding:6px 4px 26px}
+.st{font-size:16px;font-weight:800;color:#000;text-align:center;margin-bottom:14px}
+.tk{overflow:hidden;white-space:nowrap}
+.tt{display:inline-flex;animation:mq 28s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+.tc{display:inline-flex;gap:8px;width:210px;white-space:normal;background:#fafafa;border:1px solid #e6e6e6;border-radius:10px;padding:10px;margin-right:8px;vertical-align:top}
+.tc img,.tc i{width:34px;height:34px;border-radius:50%;object-fit:cover;background:#e0e0e0;flex:0 0 auto}
+.tc b{font-size:12.5px;color:#000;display:block}
+.tc span{font-size:12px;line-height:1.4}
+.fq{border:1px solid #e6e6e6;border-radius:10px;margin-bottom:8px;overflow:hidden}
+.fq button{width:100%;text-align:left;background:#fff;border:0;padding:14px 16px;font-size:14px;font-weight:700;color:#000}
+.fq p{display:none;margin:0;padding:0 16px 14px;font-size:13.5px;line-height:1.6}
+.fq.on p{display:block}
+.sticky{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #e6e6e6;padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px;z-index:60}
+.sticky b{font-size:15px;color:#000;white-space:nowrap}
+.sticky .btn{margin:0;padding:11px;font-size:13px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:99;display:none;align-items:flex-end;justify-content:center}
+@media(min-width:768px){.ov{align-items:center}}
+.md{background:#fff;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;border-radius:16px 16px 0 0;padding:22px 20px 30px;position:relative}
+@media(min-width:768px){.md{border-radius:16px}}
+.x{position:absolute;top:12px;right:14px;background:#f0f0f0;border:0;border-radius:50%;width:32px;height:32px;font-size:15px}
+.md h2{font-size:17px;text-align:center;margin:0 30px 14px 0;color:#111}
+.free{background:#1a8a1a;color:#fff;text-align:center;font-weight:700;padding:10px;border-radius:8px;margin-bottom:14px}
+.f{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.f label{font-size:14px;font-weight:600;color:#333}
+.f input,.f textarea,.f select{width:100%;padding:12px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;background:#fafafa;font-family:inherit}
+.f input:focus,.f textarea:focus,.f select:focus{outline:0;border-color:#000;background:#fff}
+.sum{background:#f7f7f7;border:1px solid #eee;border-radius:8px;padding:14px;margin-bottom:12px;font-size:14px}
+.sum strong{font-size:17px;color:#000}
+.warn{background:#fff8e1;border:1px solid #ffc107;border-radius:8px;padding:12px 14px;font-size:13px;color:#7a5000;line-height:1.5;margin-bottom:12px}
+.sub{background:#1a8a1a;margin-top:6px}
+.sub:disabled{background:#aaa}
+#stt{display:none;padding:12px 14px;border-radius:8px;font-size:14px;font-weight:600;text-align:center;margin-bottom:10px}
+#stt.e{background:#ffebee;color:#b71c1c;display:block}
+#stt.o{background:#e8f5e9;color:#1b5e20;display:block}
+#stt.l{background:#e3f2fd;color:#0d47a1;display:block}
+footer{background:#000;color:#bdbdbd;padding:30px 18px calc(30px + env(safe-area-inset-bottom));font-size:13px;line-height:1.7}
+footer b{color:#fff;display:block;font-size:15px;margin-bottom:6px}
+.fsel{margin-top:14px;font-size:12.5px;color:#888}
+.fl{background:none;border:0;color:#bdbdbd;text-decoration:underline;padding:2px 4px;font-size:12.5px}
+.fl.on{color:#fff;font-weight:700;text-decoration:none}
+footer img{height:46px;width:auto;background:#fff;border-radius:8px;padding:6px 10px;margin-bottom:12px}
+@keyframes vib{0%{transform:translateX(0)}10%{transform:translateX(-3px) rotate(-1deg)}20%{transform:translateX(3px) rotate(1deg)}30%{transform:translateX(-3px)}40%{transform:translateX(3px)}50%{transform:translateX(-2px)}60%{transform:translateX(2px)}70%{transform:translateX(-1px)}80%{transform:translateX(1px)}100%{transform:translateX(0)}}
+.vib{animation:vib .8s ease-in-out infinite;animation-delay:2s}
+.vib:active{animation:none;transform:scale(.98)}
+#brands-sec{max-width:none;margin-top:10px}
+.bt{overflow:hidden;white-space:nowrap;padding:6px 0}
+.bt-t{display:inline-flex;align-items:center;animation:mq 30s linear infinite}
+.bt-t img{height:40px;width:auto;max-width:110px;object-fit:contain;margin:0 20px}
+.cd{background:#000;border-radius:8px;padding:12px;text-align:center;margin-top:14px}
+.cd-t{color:#fff;font-size:13px;font-weight:600;margin-bottom:8px}
+.cd-n{display:flex;justify-content:center;gap:14px}
+.cd-n span{display:flex;flex-direction:column;align-items:center;min-width:44px}
+.cd-n b{color:#fff;font-size:24px;line-height:1.2}
+.cd-n i{color:#fff;font-size:9px;font-style:normal;text-transform:uppercase;letter-spacing:.5px}
+.vi{text-align:center;font-size:12.5px;color:#666;margin-top:12px}
+.vi i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1a8a1a;margin-right:6px;animation:bl 1.5s infinite}
+.vi b{color:#000}
+@keyframes bl{50%{opacity:.35}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<header>
+  <img id="logo" src="/logo.png" alt="Nuella Boutique" onclick="goHome()" onerror="this.outerHTML='<b onclick=goHome()>NUELLA</b>'">
+</header>
+
+<main class="wrap" id="home">
+  <div class="trust" id="trust-h"></div>
+  <div class="cats" id="cats"></div>
+  <div class="grid" id="grid"><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
+  <div class="sec" id="tmh-sec" style="display:none;margin-top:24px"><div class="st" data-i="reviews"></div><div class="tk"><div class="tt" id="tmh-track"></div></div></div>
+</main>
+
+<main id="prod" style="display:none">
+  <div class="pv">
+    <button class="back" onclick="goHome()" data-i="back"></button>
+    <img id="g-main" src="" alt="">
+    <div class="th" id="g-th"></div>
+    <div class="stars">&#11088;&#11088;&#11088;&#11088;&#11088; <span data-i="rate"></span></div>
+    <h1 id="p-name"></h1>
+    <div class="price" id="p-price"></div>
+    <div id="p-opts"></div>
+    <div class="msg" id="p-msg"></div>
+    <div id="vi-box"></div><div id="cd-box"></div>
+    <button class="btn" id="p-btn" onclick="openModal()"></button>
+    <div class="trust" id="trust-p"></div>
+    <div class="desc" id="p-desc"></div>
+  </div>
+  <div class="sec" id="tm-sec" style="display:none"><div class="st" data-i="reviews"></div><div class="tk"><div class="tt" id="tm-track"></div></div></div>
+  <div class="sec"><div class="st" data-i="faq"></div><div id="faq"></div></div>
+</main>
+
+<div class="sec" id="brands-sec" style="display:none"><div class="st" id="brands-title"></div><div class="bt"><div class="bt-t" id="brands-track"></div></div></div>
+
+<div class="sticky" id="sticky"><b id="s-price"></b><button class="btn" id="s-btn" onclick="openModal()"></button></div>
+
+<div class="ov" id="ov" onclick="if(event.target===this)closeModal()">
+  <div class="md">
+    <button class="x" onclick="closeModal()">&#10005;</button>
+    <h2 data-i="form"></h2>
+    <div class="free">&#127873; <span data-i="freeU"></span> &#127873;</div>
+    <div class="f"><label><span data-i="name"></span> *</label><input id="f-name" autocomplete="name"></div>
+    <div class="f"><label><span data-i="city"></span> *</label><input id="f-city"></div>
+    <div class="f"><label><span data-i="addr"></span> *</label><input id="f-addr"></div>
+    <div class="f"><label><span data-i="ph1"></span> *</label><input id="f-ph1" type="tel"></div>
+    <div class="f"><label data-i="ph2"></label><input id="f-ph2" type="tel"></div>
+    <div class="f"><label data-i="qty"></label><select id="f-qty" onchange="updSum()"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+    <div class="sum"><div id="sum-n"></div><div><span data-i="total"></span>: <strong id="sum-t"></strong></div></div>
+    <div class="f"><label data-i="note"></label><textarea id="f-note" rows="2"></textarea></div>
+    <div class="warn" data-i="warn"></div>
+    <div id="stt"></div>
+    <button class="btn sub" id="f-btn" onclick="submitOrder()" data-i="submit"></button>
+  </div>
+</div>
+
+<footer>
+  <img src="/logo.png" alt="" onerror="this.style.display='none'">
+  <b data-i="help"></b><span data-i="helpTxt"></span>
+  <div class="fsel"><span data-i="lang"></span>: <button class="fl" id="l-fr" onclick="setLang('fr')">FR</button>·<button class="fl" id="l-en" onclick="setLang('en')">EN</button> &nbsp;&nbsp; <span data-i="curr"></span>: <button class="fl" id="c-NGN" onclick="setCur('NGN')">₦ NGN</button>·<button class="fl" id="c-XOF" onclick="setCur('XOF')">FCFA</button></div>
+  <div style="margin-top:16px;font-size:11.5px;color:#888">&copy; <span id="yr"></span> Nuella Boutique. <span data-i="rights"></span></div>
+</footer>
+
+<script>
+var API = "https://script.google.com/macros/s/AKfycbyZSkuQSDgm5AM2dvPzqsi0IuN8peU7SJGVUWO-Z9JOeIegIC-TwFHGOtXK5UT-77V7kg/exec";
+var P = [], CP = null, L, CUR, CAT = "", SEL = {}, SET = {}, CATS = [], SZ = [], CL = [];
+
+var T = {
+  en: {lang:"Language",curr:"Currency",all:"All",back:"← Back",rate:"4.9/5 · Loved by our customers",free:"🎁 Free delivery",cod:"🤝 Pay on delivery",qual:"✅ Quality guaranteed",size:"Size",color:"Color",faq:"FAQ",reviews:"What our customers say",order:"Order now",closed:"Orders temporarily closed",none:"This combination is not available",empty:"New products coming soon",form:"Enter your delivery details",freeU:"FREE DELIVERY",name:"Full name",city:"City",addr:"Delivery address",ph1:"Phone number",ph2:"Phone number 2 (optional)",qty:"Quantity",total:"Total",note:"Note (optional)",warn:"⚠️ Please make sure you really want the item and answer the delivery call.",submit:"Place order",fill:"Please fill all required fields (*)",send:"Sending...",ok:"Order confirmed! We will contact you soon. Thank you ",err:"Something went wrong. Please try again.",help:"Need help?",helpTxt:"Customer service 7 days a week, 09:00 - 20:00. You pay cash when your order is delivered.",rights:"All rights reserved.",bar:"Free delivery · Pay on delivery"},
+  fr: {lang:"Langue",curr:"Devise",all:"Tout",back:"← Retour",rate:"4.9/5 · Adoré par nos clientes",free:"🎁 Livraison gratuite",cod:"🤝 Paiement à la livraison",qual:"✅ Qualité garantie",size:"Taille",color:"Couleur",faq:"FOIRE AUX QUESTIONS",reviews:"Ce que disent nos clientes",order:"Commander maintenant",closed:"Commandes temporairement fermées",none:"Cette combinaison n'est pas disponible",empty:"De nouveaux produits arrivent bientôt",form:"Renseignez vos informations de livraison",freeU:"LIVRAISON GRATUITE",name:"Nom et prénom",city:"Ville",addr:"Adresse de livraison",ph1:"Numéro de téléphone",ph2:"Numéro de téléphone 2 (optionnel)",qty:"Quantité",total:"Total",note:"Note (facultatif)",warn:"⚠️ Assurez-vous de vraiment vouloir le produit et de répondre aux appels du livreur.",submit:"Commandez maintenant",fill:"Veuillez remplir tous les champs obligatoires (*)",send:"Envoi en cours...",ok:"Commande confirmée ! Nous vous contacterons bientôt. Merci ",err:"Une erreur est survenue. Veuillez réessayer.",help:"Besoin d'aide ?",helpTxt:"Service client 7j/7, de 09:00 à 20:00. Vous payez en espèces à la livraison.",rights:"Tous droits réservés.",bar:"Livraison gratuite · Paiement à la livraison"}
+};
+var FAQ = [
+  ["When will I receive my order?","Orders are processed within 24h and delivered within 24-72h depending on your city.","Quand vais-je recevoir ma commande ?","Votre commande est traitée sous 24h et livrée entre 24h et 72h selon votre ville."],
+  ["How does pay on delivery work?","You pay nothing online. You pay cash to the delivery person when you receive your order.","Comment fonctionne le paiement à la livraison ?","Vous ne payez rien en ligne. Vous payez en espèces au livreur à la réception du colis."],
+  ["Can I check the item before paying?","Yes, you can check the item when it arrives, before paying the delivery person.","Puis-je vérifier l'article avant de payer ?","Oui, vous pouvez vérifier l'article à la réception, avant de payer le livreur."],
+  ["What if it does not fit?","Contact us and we will help you with the next steps.","Et si la taille ne convient pas ?","Contactez-nous et nous vous aiderons pour la suite."]
+];
+
+function $(i){return document.getElementById(i)}
+function t(k){return T[L][k]}
+function E(s){var d=document.createElement("div");d.textContent=s==null?"":s;return d.innerHTML}
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+function fmt(n){var s=Math.round(n||0).toString();return CUR==="NGN"?"₦"+s.replace(/\B(?=(\d{3})+(?!\d))/g,","):s.replace(/\B(?=(\d{3})+(?!\d))/g," ")+" FCFA"}
+function pr(v){return CUR==="NGN"?v.priceNGN:v.priceXOF}
+function op(v){return CUR==="NGN"?v.oldNGN:v.oldXOF}
+function nm(p){return L==="fr"?(p.nameFR||p.nameEN):(p.nameEN||p.nameFR)}
+function ds(p){return (L==="fr"?(p.descFR||p.descEN):(p.descEN||p.descFR))||""}
+function vs(p){return p.variants.filter(function(v){return pr(v)>0})}
+function uniq(a){return a.filter(function(x,i){return x&&a.indexOf(x)===i})}
+function getV(){return vs(CP).filter(function(v){return v.size===SEL.size&&v.color===SEL.color})[0]||null}
+
+// ---------- API (JSONP) ----------
+var jn = 0;
+function api(action, params, cb){
+  var name = "nucb" + (++jn), done = false, s = document.createElement("script");
+  var url = API + "?action=" + action + "&callback=" + name;
+  for (var k in params) url += "&" + k + "=" + encodeURIComponent(params[k]);
+  function end(r){ if(done) return; done = true; clearTimeout(tm); delete window[name]; s.remove(); cb(r); }
+  var tm = setTimeout(function(){ end({ok:false,message:t("err")}) }, 25000);
+  window[name] = end;
+  s.onerror = function(){ end({ok:false,message:t("err")}) };
+  s.src = url; document.body.appendChild(s);
+}
+
+// ---------- LANGUE / DEVISE ----------
+function setLang(l){ L = l; ls("nu_lang", l); CUR = l === "fr" ? "XOF" : "NGN"; ls("nu_cur", CUR); update(); }
+function setCur(c){ CUR = c; ls("nu_cur", c); update(); }
+function update(){
+  document.documentElement.lang = L;
+  document.querySelectorAll("[data-i]").forEach(function(e){ e.textContent = t(e.getAttribute("data-i")) });
+  ["fr","en"].forEach(function(x){ $("l-"+x).className = "fl" + (L===x?" on":"") });
+  ["NGN","XOF"].forEach(function(x){ $("c-"+x).className = "fl" + (CUR===x?" on":"") });
+  $("bar").textContent = SET.bannerFR !== undefined ? (L==="fr"?SET.bannerFR:SET.bannerEN) || t("bar") : t("bar");
+  $("p-btn").textContent = $("s-btn").textContent = SET.suspended ? t("closed") : t("order");
+  renderFaq(); render(); renderCd(); renderVi(); renderBrands();
+  $("trust-p").innerHTML = $("trust-h").innerHTML = trustBar();
+  if ($("ov").style.display === "flex") updSum();
+}
+
+// ---------- CATALOGUE ----------
+function render(){
+  CATS = uniq(P.filter(function(p){return vs(p).length}).map(function(p){return p.category}));
+  if (CAT && CATS.indexOf(CAT) === -1) CAT = "";
+  var c = '<button class="chip' + (CAT===""?" on":"") + '" onclick="setCat(-1)">' + t("all") + '</button>';
+  CATS.forEach(function(x,i){ c += '<button class="chip' + (CAT===x?" on":"") + '" onclick="setCat(' + i + ')">' + E(x) + '</button>' });
+  $("cats").innerHTML = CATS.length ? c : "";
+  var h = "";
+  P.forEach(function(p){
+    var V = vs(p); if (!V.length || (CAT && p.category !== CAT)) return;
+    var min = Math.min.apply(null, V.map(pr));
+    h += '<div class="card" onclick="openProd(\'' + p.id + '\',true)"><img src="' + E(p.photos[0]||p.photo) + '" alt=""><div><div class="n">' + E(nm(p)) + '</div><div class="pp">' + fmt(min) + '</div></div></div>';
+  });
+  $("grid").innerHTML = h || '<div class="empty">' + t("empty") + '</div>';
+  if (CP) renderProd();
+}
+function setCat(i){ CAT = i < 0 ? "" : CATS[i]; render(); }
+
+// ---------- FICHE PRODUIT ----------
+function openProd(id, push){
+  var p = P.filter(function(x){return x.id === String(id)})[0];
+  if (!p) return goHome();
+  CP = p;
+  var f = vs(p)[0]; SEL = f ? {size:f.size,color:f.color} : {};
+  $("home").style.display = "none"; $("prod").style.display = "block"; $("sticky").style.display = "none"; window.onscroll = stickyCheck;
+  window.scrollTo(0,0);
+  renderProd(); loadTm(p.id); renderCd(); renderVi();
+  if (push) try{ history.pushState({}, "", "/produit/" + encodeURIComponent(p.id)) }catch(e){}
+}
+function goHome(push){
+  CP = null; window.onscroll = null; renderCd(); renderVi(); $("prod").style.display = "none"; $("sticky").style.display = "none"; $("home").style.display = "block";
+  window.scrollTo(0,0);
+  if (push !== false) try{ history.pushState({}, "", "/") }catch(e){}
+}
+function renderProd(){
+  var p = CP, V = vs(p), v = getV();
+  var ph = p.photos && p.photos.length ? p.photos : [p.photo];
+  $("g-main").src = ph[0];
+  $("g-th").innerHTML = ph.length > 1 ? ph.map(function(u,i){ return '<img class="' + (i===0?"on":"") + '" src="' + E(u) + '" onclick="showPh(this)">' }).join("") : "";
+  $("p-name").textContent = nm(p);
+  $("p-price").innerHTML = v ? '<b>' + fmt(pr(v)) + '</b>' + (op(v) > pr(v) ? '<s>' + fmt(op(v)) + '</s>' : '') : '<b>—</b>';
+  $("s-price").textContent = v ? fmt(pr(v)) : "—";
+  SZ = uniq(V.map(function(x){return x.size})); CL = uniq(V.map(function(x){return x.color}));
+  var o = "";
+  if (SZ.length) o += '<div class="lb">' + t("size") + '</div><div class="opts">' + SZ.map(function(s,i){ return '<button class="opt' + (SEL.size===s?" on":"") + '" onclick="pick(\'size\',' + i + ')">' + E(s) + '</button>' }).join("") + '</div>';
+  if (CL.length) o += '<div class="lb">' + t("color") + '</div><div class="opts">' + CL.map(function(s,i){ return '<button class="opt' + (SEL.color===s?" on":"") + '" onclick="pick(\'color\',' + i + ')">' + E(s) + '</button>' }).join("") + '</div>';
+  $("p-opts").innerHTML = o;
+  $("p-msg").textContent = (!v && V.length) ? t("none") : "";
+  $("p-desc").innerHTML = ds(p);
+  $("p-btn").disabled = $("s-btn").disabled = !v || !!SET.suspended;
+  $("p-btn").className = "btn" + ((v && !SET.suspended) ? " vib" : "");
+}
+function showPh(el){
+  $("g-main").src = el.src;
+  document.querySelectorAll("#g-th img").forEach(function(i){ i.className = "" });
+  el.className = "on";
+}
+function pick(k, i){
+  var val = (k === "size" ? SZ : CL)[i]; SEL[k] = val;
+  if (!getV()) { var f = vs(CP).filter(function(v){return v[k] === val})[0]; if (f) SEL = {size:f.size,color:f.color}; }
+  renderProd();
+}
+
+// ---------- TEMOIGNAGES + FAQ ----------
+function tmCards(l){
+  var h = "";
+  l.concat(l).forEach(function(x){
+    h += '<div class="tc">' + (x.photoURL ? '<img src="' + E(x.photoURL) + '" onerror="this.style.opacity=0">' : '<i></i>') + '<div><b>' + E(x.clientName) + '</b><span>' + E(x.text) + '</span></div></div>';
+  });
+  return h;
+}
+function loadTm(id){
+  api("getTestimonials", {productId:id}, function(r){
+    var l = (r && r.ok) ? r.testimonials : [];
+    $("tm-sec").style.display = l.length ? "block" : "none";
+    $("tm-track").innerHTML = tmCards(l);
+  });
+}
+function loadTmHome(){
+  api("getTestimonials", {productId:""}, function(r){
+    var l = (r && r.ok) ? r.testimonials.slice(0, 12) : [];
+    $("tmh-sec").style.display = l.length ? "block" : "none";
+    $("tmh-track").innerHTML = tmCards(l);
+  });
+}
+function stickyCheck(){
+  var b = $("p-btn"); if (!CP || !b) return;
+  $("sticky").style.display = b.getBoundingClientRect().bottom < 0 ? "flex" : "none";
+}
+function trustBar(){
+  var one = '<span>' + t("free") + '</span><span>' + t("cod") + '</span><span>' + t("qual") + '</span>';
+  return '<div class="trk">' + one + one + one + one + '</div>';
+}
+function renderBrands(){
+  var sec = $("brands-sec"), b = X.brands || [];
+  if (!X.brandsOn || !b.length) { sec.style.display = "none"; return; }
+  sec.style.display = "block";
+  $("brands-title").textContent = L === "fr" ? X.brandsTitleFR : X.brandsTitleEN;
+  var items = [], k = Math.max(1, Math.ceil(10 / b.length));
+  for (var i = 0; i < k; i++) items = items.concat(b);
+  var h = "";
+  items.concat(items).forEach(function(x){ h += '<img src="' + E(x.l) + '" alt="' + E(x.n || "") + '" onerror="this.style.display=\'none\'">'; });
+  $("brands-track").innerHTML = h;
+}
+function renderFaq(){
+  var o = L === "fr" ? 2 : 0;
+  $("faq").innerHTML = FAQ.map(function(f,i){ return '<div class="fq' + (i===0?" on":"") + '"><button onclick="this.parentNode.classList.toggle(\'on\')">' + E(f[o]) + '</button><p>' + E(f[o+1]) + '</p></div>' }).join("");
+}
+
+// ---------- COMMANDE ----------
+function openModal(){
+  var v = getV(); if (!v || SET.suspended) return;
+  $("stt").className = ""; $("f-btn").disabled = false;
+  $("ov").style.display = "flex"; updSum();
+}
+function closeModal(){ $("ov").style.display = "none"; }
+function updSum(){
+  var v = getV(); if (!v) return;
+  var q = parseInt($("f-qty").value) || 1;
+  $("sum-n").textContent = nm(CP) + (v.size ? " - " + v.size : "") + (v.color ? " - " + v.color : "") + " x" + q;
+  $("sum-t").textContent = fmt(pr(v) * q);
+}
+function status(type, msg){ var s = $("stt"); s.className = type; s.textContent = msg; }
+function submitOrder(){
+  var v = getV(); if (!v) return;
+  var d = {
+    productId: CP.id, size: v.size, color: v.color, currency: CUR, lang: L,
+    qty: parseInt($("f-qty").value) || 1,
+    name: $("f-name").value.trim(), city: $("f-city").value.trim(), address: $("f-addr").value.trim(),
+    phone1: $("f-ph1").value.trim(), phone2: $("f-ph2").value.trim(), note: $("f-note").value.trim()
+  };
+  if (!d.name || !d.city || !d.address || !d.phone1) return status("e", t("fill"));
+  $("f-btn").disabled = true; status("l", t("send"));
+  api("submitOrder", {data: JSON.stringify(d)}, function(r){
+    if (r && r.ok) {
+      status("o", t("ok") + d.name.split(" ")[0] + " !");
+      ["f-name","f-city","f-addr","f-ph1","f-ph2","f-note"].forEach(function(i){ $(i).value = "" });
+      setTimeout(closeModal, 3500);
+    } else status("e", (r && r.message) || t("err"));
+    $("f-btn").disabled = false;
+  });
+}
+
+// ---------- COMPTE A REBOURS + VISITEURS EN LIGNE (reglages dans l'admin) ----------
+var X = {cdOn:false, cdMin:150, cdLoop:true, cdTextEN:"Limited offer! Hurry up!", cdTextFR:"Offre limitée ! Dépêchez-vous !", viOn:false, viMin:2, viLabelEN:"Visitors online now", viLabelFR:"Visiteurs en ligne actuellement", brandsOn:false, brandsTitleEN:"Our brands", brandsTitleFR:"Nos marques", brands:[]};
+var cdT = null, vN = 0, vStarted = false;
+var SID = (function(){ var k = ls("nu_sid"); if (!k) { k = "s" + Date.now() + Math.random().toString(36).slice(2, 8); ls("nu_sid", k); } return k; })();
+function pad(n){ return ("0" + n).slice(-2) }
+function renderCd(){
+  var b = $("cd-box"); clearInterval(cdT);
+  if (!X.cdOn || !CP) { b.innerHTML = ""; return; }
+  var fr = L === "fr";
+  b.innerHTML = '<div class="cd"><div class="cd-t">' + E(fr ? X.cdTextFR : X.cdTextEN) + '</div><div class="cd-n"><span><b id="cd-h">00</b><i>' + (fr ? "Heures" : "Hours") + '</i></span><span><b id="cd-m">00</b><i>Min</i></span><span><b id="cd-s">00</b><i>Sec</i></span></div></div>';
+  var dur = (parseInt(X.cdMin) || 150) * 60000, end = parseInt(ls("nu_cd_end")) || 0;
+  if (!end || ls("nu_cd_dur") !== String(dur) || (end < Date.now() && X.cdLoop)) { end = Date.now() + dur; ls("nu_cd_end", end); ls("nu_cd_dur", dur); }
+  function tick(){
+    var r = end - Date.now();
+    if (r <= 0) {
+      if (X.cdLoop) { end = Date.now() + dur; ls("nu_cd_end", end); r = dur; }
+      else { b.innerHTML = ""; clearInterval(cdT); return; }
+    }
+    var t = Math.floor(r / 1000);
+    $("cd-h").textContent = pad(Math.floor(t / 3600)); $("cd-m").textContent = pad(Math.floor(t % 3600 / 60)); $("cd-s").textContent = pad(t % 60);
+  }
+  tick(); cdT = setInterval(tick, 1000);
+}
+function renderVi(){
+  var b = $("vi-box");
+  if (!X.viOn || !CP || vN < (parseInt(X.viMin) || 1)) { b.innerHTML = ""; return; }
+  b.innerHTML = '<div class="vi"><i></i><b>' + vN + '</b> ' + E(L === "fr" ? X.viLabelFR : X.viLabelEN) + '</div>';
+}
+function pingVisit(){
+  if (document.hidden) return;
+  api("adm", {adm:"pub", sub:"visit", sid:SID}, function(r){ if (r && r.ok) { vN = r.n; renderVi(); } });
+}
+function startVisits(){
+  if (vStarted || !X.viOn) return;
+  vStarted = true; pingVisit(); setInterval(pingVisit, 30000);
+}
+
+// ---------- DEMARRAGE ----------
+function route(){
+  var m = location.pathname.match(/^\/produit\/([^\/]+)/);
+  var id = m ? decodeURIComponent(m[1]) : new URLSearchParams(location.search).get("id");
+  if (id && P.length) openProd(id, false); else goHome(false);
+}
+window.onpopstate = route;
+L = ls("nu_lang") || ((navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en");
+CUR = ls("nu_cur") || (L === "fr" ? "XOF" : "NGN");
+$("yr").textContent = new Date().getFullYear();
+update();
+api("adm", {adm:"pub"}, function(r){ if (r && r.ok && r.x) { X = r.x; update(); startVisits(); } });
+loadTmHome();
+api("getSettings", {}, function(r){ if (r && r.ok) { SET = r.settings; update(); } });
+api("getProducts", {}, function(r){
+  if (!r || !r.ok) { $("grid").innerHTML = '<div class="empty">' + t("err") + '</div>'; return; }
+  P = r.products || []; render(); route();
+});
+</script>
+</body>
+</html>
